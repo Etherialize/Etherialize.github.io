@@ -13,7 +13,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="John Doe">
+  <meta name="author" content="HZY">
   <meta name="keywords" content="">
   
     <meta name="description" content="OO 第二单元总结 本文为OO 第二单元电梯作业总结，本单元主要是掌握多线程和线程安全。三次作业总的架构类似，可分为输入线程、调度线程、电梯线程。三次作业的增量迭代如下  第五次作业  六部电梯   第六次作业  可选择增加电梯，电梯的初始属性可变 维修电梯，将维修电梯的乘客重新安排   第七次作业  新增电梯增加可达性、 信号量的使用    一、同步块和锁 由于我的架构还算完善，所以每次增量较为">
@@ -26,8 +26,11 @@
 <meta property="og:image" content="https://etherialize.github.io/2023/04/17/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93/1.png">
 <meta property="og:image" content="https://etherialize.github.io/2023/04/17/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93/2.png">
 <meta property="article:published_time" content="2023-04-17T14:21:40.000Z">
-<meta property="article:modified_time" content="2023-04-17T14:23:51.978Z">
+<meta property="article:modified_time" content="2023-04-17T14:25:32.145Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="OO">
+<meta property="article:tag" content="总结">
+<meta property="article:tag" content="多线程">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://etherialize.github.io/2023/04/17/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93/1.png">
   
@@ -221,7 +224,7 @@
     
       <span class="post-meta mr-2">
         <i class="iconfont icon-author" aria-hidden="true"></i>
-        John Doe
+        HZY
       </span>
     
     
@@ -598,6 +601,38 @@ S --&gt;&gt;- I : ;
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/OO/" class="category-chain-item">OO</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/OO/">#OO</a>
+      
+        <a href="/tags/%E6%80%BB%E7%BB%93/">#总结</a>
+      
+        <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">#多线程</a>
+      
+    </div>
   
 </div>
 
@@ -614,7 +649,7 @@ S --&gt;&gt;- I : ;
       
         <div class="license-meta-item">
           <div>作者</div>
-          <div>John Doe</div>
+          <div>HZY</div>
         </div>
       
       
@@ -715,6 +750,25 @@ S --&gt;&gt;- I : ;
 
   
 
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
 
 
 
@@ -907,6 +961,49 @@ S --&gt;&gt;- I : ;
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
