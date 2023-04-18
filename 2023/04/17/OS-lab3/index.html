@@ -20,7 +20,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="OS-lab3">
 <meta property="og:url" content="https://etherialize.github.io/2023/04/17/OS-lab3/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Shall We ?">
 <meta property="og:description" content="OS-lab3 上机 exam 我们要修改调度函数，实现多用户的（公平）进程调度，就是在Env结构体了新加一个属性：u_int env_user（[0,4]）（测试程序会给你赋值），最多不超过5名用户。简言之，在需要调度新的进程的时候你需要统计每个用户的总时间片选，总时间片选保存static int[] 数组中，然后你需要选出当前有进程的用户并且总时间片选最少的（相同则id最小）的用户，然后选出遍">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-17T13:41:27.000Z">
@@ -32,7 +32,7 @@
   
   
   
-  <title>OS-lab3 - Hexo</title>
+  <title>OS-lab3 - Shall We ?</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -96,7 +96,7 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>Hzy&#39;s Blog</strong>
+      <strong>Shall We ?</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
