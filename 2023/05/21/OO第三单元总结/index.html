@@ -16,23 +16,24 @@
   <meta name="author" content="HZY">
   <meta name="keywords" content="">
   
-    <meta name="description" content="OS-lab4 上机 lab4-1 exam 发现这届课程组确实很贴心，担心大家过不了exam，每次都给伪代码。lab3上机要自己实现异常处理函数，lab4是实现系统调用。这次exam特别特别简单（尤其还给伪代码，想错都难），实现进程组通讯。 extra 实现父进程给所有的后代进程（子进程、子子进程、…），可以在用户态实现，也可以写新的系统调用。 要遍历所有的后代进程可以用dfs，我是在用户态实现">
+    <meta name="description" content="OO第三单元总结 一、测试 本单元基于JML进行规格化设计，并且针对实现的代码进行测试。由于每个要实现的功能和方法的规格和作用都已明确给出，所以在具体实现方面着重考虑数据结构和方法复杂度。众所周知，中测就是闹着玩的，真测试还得靠自己。 黑箱、白箱测试   黑箱测试，着重测试软件的功能需求，是在程序接口上进行的测试。对于每次作业，就是评测机通过大量测试数据力求达到高覆盖性的测试。由于只能看到输入与输">
 <meta property="og:type" content="article">
-<meta property="og:title" content="OS-lab4">
-<meta property="og:url" content="https://etherialize.github.io/2023/05/13/OS-lab4/index.html">
+<meta property="og:title" content="OO第三单元总结">
+<meta property="og:url" content="https://etherialize.github.io/2023/05/21/OO%E7%AC%AC%E4%B8%89%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="Shall We ?">
-<meta property="og:description" content="OS-lab4 上机 lab4-1 exam 发现这届课程组确实很贴心，担心大家过不了exam，每次都给伪代码。lab3上机要自己实现异常处理函数，lab4是实现系统调用。这次exam特别特别简单（尤其还给伪代码，想错都难），实现进程组通讯。 extra 实现父进程给所有的后代进程（子进程、子子进程、…），可以在用户态实现，也可以写新的系统调用。 要遍历所有的后代进程可以用dfs，我是在用户态实现">
+<meta property="og:description" content="OO第三单元总结 一、测试 本单元基于JML进行规格化设计，并且针对实现的代码进行测试。由于每个要实现的功能和方法的规格和作用都已明确给出，所以在具体实现方面着重考虑数据结构和方法复杂度。众所周知，中测就是闹着玩的，真测试还得靠自己。 黑箱、白箱测试   黑箱测试，着重测试软件的功能需求，是在程序接口上进行的测试。对于每次作业，就是评测机通过大量测试数据力求达到高覆盖性的测试。由于只能看到输入与输">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-13T15:26:14.000Z">
-<meta property="article:modified_time" content="2023-05-13T15:56:07.356Z">
+<meta property="article:published_time" content="2023-05-21T11:20:31.000Z">
+<meta property="article:modified_time" content="2023-05-21T11:22:25.863Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="OS">
-<meta property="article:tag" content="lab4">
+<meta property="article:tag" content="OO">
+<meta property="article:tag" content="总结">
+<meta property="article:tag" content="JML">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>OS-lab4 - Shall We ?</title>
+  <title>OO第三单元总结 - Shall We ?</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -210,7 +211,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="OS-lab4"></span>
+            <span id="subtitle" data-typed-text="OO第三单元总结"></span>
           
         </div>
 
@@ -226,8 +227,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-13 23:26" pubdate>
-          2023年5月13日 晚上
+        <time datetime="2023-05-21 19:20" pubdate>
+          2023年5月21日 晚上
         </time>
       </span>
     
@@ -238,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.2k 字
+          5.3k 字
         
       </span>
     
@@ -249,7 +250,7 @@
         
         
         
-          27 分钟
+          44 分钟
         
       </span>
     
@@ -287,87 +288,252 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">OS-lab4</h1>
+            <h1 style="display: none">OO第三单元总结</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>OS-lab4</h1>
-<h2 id="上机">上机</h2>
-<h3 id="lab4-1">lab4-1</h3>
-<h4 id="exam">exam</h4>
-<p>发现这届课程组确实很贴心，担心大家过不了exam，每次都给伪代码。lab3上机要自己实现异常处理函数，lab4是实现系统调用。这次exam特别特别简单（尤其还给伪代码，想错都难），实现进程组通讯。</p>
-<h4 id="extra">extra</h4>
-<p>实现父进程给所有的后代进程（子进程、子子进程、…），可以在用户态实现，也可以写新的系统调用。</p>
-<p>要遍历所有的后代进程可以用dfs，我是在用户态实现的</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">ipc_broadcast</span><span class="hljs-params">(u_int val, <span class="hljs-type">void</span> *srcva, u_int perm)</span><br>&#123;<br>	dfs(syscall_getenvid(), val, srcva, perm);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">dfs</span><span class="hljs-params">(u_int id, u_int val, <span class="hljs-type">void</span> *srcva, u_int perm)</span><br>&#123;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (envs[i].env_status != ENV_FREE &amp;&amp; envs[i].env_parent_id == id &amp;&amp; envs[i].env_parent_id!=<span class="hljs-number">0</span>)<br>		&#123;   debugf(<span class="hljs-string">&quot;i&#x27;m in\n&quot;</span>);<br>			dfs(envs[i].env_id, val, srcva, perm);<br>			ipc_send(envs[i].env_id, val, srcva, perm);<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>md气死我了，我 <code>dfs(syscall_getenvid(), val, srcva, perm);</code>调用syscall_getenvid的时候没加括号，结果相当于传的是syscall_getenvid这个函数的地址，气死了，气死了，到最后也没找出来bug</p>
-<h3 id="lab4-2">lab4-2</h3>
-<h4 id="exam-2">exam</h4>
-<p>实现父进程，阻塞所有的后代进程。准确来说，父进程申请一个信号量，可以最多阻塞n个进程，然后后代进程会阻塞，当阻塞的进程数达到n的时候，解除阻塞，同时信号量失效。</p>
-<p>保证</p>
-<ul>
-<li>只有一个根进程，其他都是后代进程，所以我们的信号量可以直接定义一个全局变量，但如果有多个父进程，就需要把信号量设成进程的属性，在fork的时候父进程把它传给子进程</li>
-<li>只会进行一次申请信号量，保证先申请，才会fork</li>
-</ul>
-<p>我的阻塞实现在用户态，首先在ipc.c中定义<code>void barrier_alloc(int n) </code>,<code>void barrier_wait(void)</code></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">barrier_alloc</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span>&#123;<br>       syscall_barrier(<span class="hljs-number">0</span>, n);<br><br>	&#125;<br><span class="hljs-type">void</span> <span class="hljs-title function_">barrier_wait</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>&#123;<br>        <span class="hljs-type">int</span> r;<br>	syscall_barrier(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>);<br>	<span class="hljs-keyword">while</span>((r = syscall_barrier(<span class="hljs-number">1</span>,<span class="hljs-number">0</span>)) != <span class="hljs-number">0</span>)&#123;<br>            syscall_yield();<br>		&#125;<br>	&#125;<br></code></pre></td></tr></table></figure>
-<p>实现系统调用</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">sys_barrier</span><span class="hljs-params">(<span class="hljs-type">int</span> op, <span class="hljs-type">int</span> sum)</span><br>&#123;<br>	<span class="hljs-keyword">if</span> (op == <span class="hljs-number">0</span>)             <span class="hljs-comment">// 申请</span><br>	&#123;<br>		ba = sum;<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>	&#125;<br>	<span class="hljs-keyword">if</span> (op == <span class="hljs-number">2</span>)            <span class="hljs-comment">//try_wait</span><br>	&#123;<br>		ba--;<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>	&#125;<br>	<span class="hljs-keyword">if</span> (op == <span class="hljs-number">1</span>)            <span class="hljs-comment">// 查询</span><br>	&#123;<br>		<span class="hljs-keyword">if</span> (ba &lt;= <span class="hljs-number">0</span>)<br>		&#123;<br><br>			<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>		&#125;<br>		<span class="hljs-keyword">else</span><br>		&#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>但其实我的实现是错的：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">barrier_wait</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>&#123;<br>        <span class="hljs-type">int</span> r;<br>	syscall_barrier(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>);          <span class="hljs-comment">//如果执行完这一句之后时间片用完了，切换下一个进程，会出问题</span><br>	<span class="hljs-keyword">while</span>((r = syscall_barrier(<span class="hljs-number">1</span>,<span class="hljs-number">0</span>)) != <span class="hljs-number">0</span>)&#123;<br>            syscall_yield();<br>		&#125;<br>	&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">barrier_wait</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>&#123;<br>        <span class="hljs-type">int</span> r;        <br>	<span class="hljs-keyword">while</span>((r = syscall_barrier()) != <span class="hljs-number">0</span>)&#123;      <span class="hljs-comment">//这样才是正确的</span><br>            syscall_yield();<br>		&#125;<br>	&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="实验报告">实验报告</h2>
-<h3 id="一、thinking">一、thinking</h3>
-<h3 id="thinking-4-1">thinking 4.1</h3>
-<ul>
-<li>k0寄存器在MIPS规范中是留给内核操作的，保存现场的时候，对于状态寄存器可以用k0寄存器做最中介进行传递</li>
-<li>如果切换内核态的时候没有修改a0-a3应该是可以访问的，但do_syscall传递了tf这个参数，会修改寄存器的值，所以不能</li>
-<li>do_syscall 的时候我们保存了系统调用前的现场，按照SAVEALL的规格，便可以找到传递的参数</li>
-<li>4
-<ul>
-<li>EPC+=4，返回到系统调用的下一条指令</li>
-<li>如果系统调用号不存在，通过修改v0返回错误值</li>
-</ul>
+                <h1>OO第三单元总结</h1>
+<h2 id="一、测试">一、测试</h2>
+<p>本单元基于JML进行规格化设计，并且针对实现的代码进行测试。由于每个要实现的功能和方法的规格和作用都已明确给出，所以在具体实现方面着重考虑数据结构和方法复杂度。众所周知，中测就是闹着玩的，真测试还得靠自己。</p>
+<h3 id="黑箱、白箱测试">黑箱、白箱测试</h3>
+<ol>
+<li>
+<p>黑箱测试，着重测试软件的功能需求，是在程序接口上进行的测试。对于每次作业，就是评测机通过大量测试数据力求达到高覆盖性的测试。由于只能看到输入与输出，其内部运行结构我们并不关心，所以是黑箱测试。</p>
 </li>
-</ul>
-<h3 id="thinking-4-2">thinking 4.2</h3>
-<p>进程号是独一无二的，801和001返回的是同一个进程块，而001是非法的，所以必须判断一下</p>
-<h3 id="thinking-4-3">thinking 4.3</h3>
-<p>envid2env函数中，如果进程号为0，则返回当前进程块</p>
-<h3 id="thinking-4-4">thinking 4.4</h3>
-<p>C，子进程并没有调用fork，但其调度时返回的现场和父进程相同，除了返回值是0</p>
-<h3 id="thinking-4-5">thinking 4.5</h3>
-<p>USTACKTOP以上的用户空间不能映射，包括每个进程的页表和页目录，每个进程都不一样。</p>
-<p>pages，envs在进程申请的时候进行了映射，也不需要</p>
-<h3 id="thinking-4-6">thinking 4.6</h3>
+<li>
+<p>白箱测试，逻辑测试，穷举路径测试。</p>
+</li>
+</ol>
 <ul>
-<li>vpd和vpt是页目录和页表的基地址，我们取某个页表项的时候可以vpt[index]即可</li>
-<li>进程申请的时候完成了页表的自映射</li>
-<li>e-&gt;env_pgdir[PDX(UVPT)] = PADDR(e-&gt;env_pgdir) | PTE_V;</li>
-<li>由上述自映射我们发现，我们只有有效位，并没有PTE_D，所以不能修改</li>
+<li>针对模块中所有的方法路径都需要进行测试</li>
+<li>所有逻辑值true和flase都需要进行测试</li>
+<li>数据结构的测试</li>
+<li>测试数据在合法范围内都需要覆盖测试</li>
 </ul>
-<h3 id="thinking-4-7">thinking 4.7</h3>
-<p>真正的异常处理函数在用户空间，我们必须保证在异常处理完之后回到异常发生的现场</p>
-<p>如果有多个异常进程，如果保存的现场都在内核态同一个位置，可能会出差错，保存在用户空间解决了这个问题</p>
-<h3 id="thinking-4-8">thinking 4.8</h3>
-<p>更符合微内核的设计，能在用户空间处理的问题就在用户空间处理，但是在COW处理的过程中，进行了多次系统调用，为什么不在一次系统调用中完成呢，切换内核态不是很大的开销吗？</p>
-<h3 id="thinking-4-9">thinking 4.9</h3>
-<p>我们在exofork系统调用中，已经设置了子进程的写入异常函数，所以应在exofork之前就进行set_tlb_mod_entry系统调用</p>
-<h3 id="二、实验难点分析">二、实验难点分析</h3>
-<h3 id="1-系统调用是特殊的异常">1. 系统调用是特殊的异常</h3>
-<p>都是保存现场进入特定的异常处理函数do_syscall，然后根据传进来的系统调用号再进入特定的系统调用函数。除此，系统调用并不会切换进程，可以理解为用户程序执行了一段内核的代码</p>
-<h3 id="2-envid2env">2. envid2env</h3>
-<p>了解创建系统调用号的过程，确保了所有的进程的进程号都不同，所以才有ENVX这个宏。在envid2env中我们特地检查了e的进程id是否和传进来的参数一样，若一样则没问题。如果不一样，确实会有不一样的情况：801和001这两个返回的进程块一样，但001的进程id是非法的。</p>
-<h3 id="3-进程通信">3. 进程通信</h3>
-<p>在try_send系统调用中，我一开始使用了sys_mem_map函数，这样是不对的，因为sys_mem_map中envid2env传入了检查位。</p>
-<h3 id="4-写入异常函数">4. 写入异常函数</h3>
-<p>写入异常的函数在用户空间中，所以处理完异常后需要恢复现场。</p>
-<p>COW机制确保了父子进程能够最大共享数据</p>
-<h3 id="三、实验感想">三、实验感想</h3>
+<p>比如我们三次作业中都有针对特定方法的OKTest，在验证OKTest的正确性时，对于每一个逻辑值都要测试true和flase，基于此生成的         测试数据就是白盒测试。</p>
+<ol start="3">
+<li>此外单元测试是指对软件中最小的可测试单元的测试，在作业中OKTest就是单元测试；将多个模块耦合进行集成测试，例如作业中类之间方法调用测试；针对性能进行压力测试，在作业中CPU时间要求在15s内；当优化或修改代码后，要进行回归测试保证修改没有带来新的错误。</li>
+</ol>
+<h3 id="测试数据构造">测试数据构造</h3>
 <ul>
-<li>总的来说，lab4的难度又有提升，工作量很大，需要在内核代码和用户代码来回切换</li>
-<li>初始了进程通信和fork，明白了简化的实现机制，只有先理解了简单的机制，才能有优化提升的空间，在进程尝试发消息的时候一直处于轮询状态，这样很浪费资源</li>
+<li>通过缩小id范围，增加数据数量来保证每个异常都能被触发</li>
+<li>对边界数据的测试，比如测试group的人数</li>
+<li>对于涉及到动态维护且复杂度较大的指令，加强测试。比如mr操作可能涉及到并查集的更改，可以先ap500条，然后10000条mr，测试CPU运行时间。</li>
 </ul>
+<h2 id="二、架构设计">二、架构设计</h2>
+<h3 id="类图（以第三次作业为例）">类图（以第三次作业为例）</h3>
+<pre><code class=" mermaid">classDiagram
+
+
+class MyPerson&#123;
+      -int id
+      -String name
+      -int age
+      -ArrayList&lt;Message&gt; messages
+      -HashMap&lt;Integer, Integer&gt; value
+      -Integer bestAcqId
+      -Integer bestAcq
+      -int money
+      -int socialValue
+      +MyPerson()
+      +int getId()
+      +String getName()
+      +int getAge()
+      +boolean equals()
+      +boolean isLinked()
+      +int queryValue()
+      +void setValue()
+      +void addSocialValue()
+      +int getSocialValue()
+      +List&lt;Message&gt; getMessages()
+      +List&lt;Message&gt;getReceivedMessages()
+      +void clerNotices()
+      +void removeAcq()
+      +void addMessage()
+      +Integer getBestAcqId()
+      +int compareTo()
+      +void addMoney()
+      +int getMoney()
+      -void updateBest()
+&#125;
+
+class MyNetwork&#123;
+      -HashMap&lt;Integer, Person&gt; people
+      -HashMap&lt;Integer, Group&gt; groups
+      -HashMap&lt;Integer, Message&gt; messages
+      -HashMap&lt;Integer, Integer&gt; emojis
+      -Graph graph
+      +MyNetwork()
+      +boolean contains()
+      +Person getPerson()
+      +void addPerson()
+      +void addRelation()
+      +void modifyRelation()
+      +void modifyGroupRelation()
+      +void removeRelation()
+      +int queryValue()
+      +boolean isCircle()
+      +int queryBlockSum()
+      +int queryTripleSum()
+      +void addGroup()
+      +Group getGroup()
+      +void addToGroup()
+      +int queryGroupValueSum()
+      +int queryGroupAgeVar()
+      +void delFromGroup()
+      +boolean containsMessage()
+      +void addMessage()
+      +Message getMessage()
+      +void sendMessage()
+      +int querySocialValue()
+      +List&lt;Message&gt; queryReceiveMessages()
+      +int queryBestAcquaintance()
+      +int queryCoupleSum()
+      +void storeEmojiId()
+      +boolean containsEmojiId()
+      +int queryMoney()
+      +int queryPopularity()
+      +void deleteColdEmoji()
+      +void clearNotices()
+      +int queryLeastMoments()
+      +int deleteColdEmojiOKTest()
+&#125;
+class MyMessage&#123;
+      -int id
+      -int socialValue
+      -int type
+      -Person person1
+      -Person person2
+      -Group group
+      +MyMessage()
+      +int getType()
+      +int getSocialValue()
+      +int getId()
+      +Person getPerson1()
+      +Person getPerson2()
+      +Group getGroup()
+      +boolean equals()
+&#125;
+class MyGroup&#123;
+      -int id
+      -int valueSum
+      -int ageSum
+      -ArrayList&lt;Person&gt; people
+      +MyGroup()
+      +int getId()
+      +void addAllSocialValue()
+      +void addAllMoney()
+      +boolean equals)()
+      +void addPerson()
+      +void addValue()
+      +boolean hasPerson()
+      +int getValueSum()
+      +void modifyRelation()
+      +int getAgeMean()
+      +int getAgeVar()
+      +void delPerson()
+      +int getSize()
+&#125;
+class Graph&#123;
+      -HashMap&lt;Integer, HashSet&lt;Integer&gt;&gt; uniComponent
+      -HashMap&lt;Integer, HashMap&lt;Integer, Integer&gt;&gt; triples
+      -HashMap&lt;Integer, HashMap&lt;Integer, Boolean&gt;&gt; isUsefuls
+      -int blockSum
+      +void addPerson()
+      +void addRelation()
+      +void modifyRelation()
+      +void addTri()
+      +void merge()
+      +boolean isCircle()
+      +int queryTriSum()
+      +int queryBlockSum()
+      +void removeRel()
+      +int queryLeastMoments()
+&#125;
+class MyEmojiMessage&#123;
+      -int emojiId
+      +MyEmojiMessage()
+&#125;
+class MyRedEnvelopeMessage&#123;
+      -int money
+      +MyRedEnvlopeMessage()
+&#125;
+MyNetwork --&gt; MyPerson : contains
+MyNetwork --&gt; MyMessage : contains
+MyNetwork --&gt; MyGroup : contains
+MyNetwork --&gt; Graph : contains
+MyMessage --&gt; MyEmojiMessage : extends
+MyMessage --&gt; MyRedEnvelopeMessage : extends
+</code></pre>
+<h3 id="图模型数据结构">图模型数据结构</h3>
+<p>本单元涉及较难实现的部分有最大联通块的数量、三元环的数量、循环路径数量，其中最大联通块的数量动态维护。</p>
+<h4 id="并查集实现动态维护最大联通块的数量">并查集实现动态维护最大联通块的数量</h4>
+<p>此部分我没有使用建树的方法，维护策略如下</p>
+<pre><code class=" mermaid">graph TB
+A1(操作)
+A1 --加关系--&gt; B1
+A1 --删关系--&gt; C1
+subgraph 加关系
+B1 --- B2
+B1 --- B3
+B2 --&gt; B4 
+B3 --将所在的两个连通块融合--&gt; B5
+B1&#123;判断两人是否已在同一连通块&#125;
+B2[在]
+B3[不在]
+B4[将此关系标记为无用关系]
+B5[blockSum--]
+end
+subgraph 删关系
+C1 --- C2
+C2 --&gt; C3
+C1 --&gt; C4
+C4 --&gt; C5
+C5 --&gt; C6
+C6 --&gt; C7
+C7 --&gt; B1
+C1&#123;判断此关系类型&#125;
+C2[无用关系]
+C3[直接删去]
+C4[有用关系]
+C5[记录此联通块的所有边]
+C6[将联通块的所有边变为孤立点]
+C7[重新加边]
+end
+</code></pre>
+<h4 id="有向图查询三元环数量">有向图查询三元环数量</h4>
+<p>将所有关系记为id较小的人指向id大的人的出边，所有三元环都有如下结构：</p>
+<pre><code class=" mermaid">graph LR
+id1 --e12--&gt; id2
+id2 --e23--&gt; id3
+id1 --e13--&gt; id3
+id1((p1))
+id2((p2))
+id3((p3))
+</code></pre>
+<p>算法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">for</span>(Person p1 : people)&#123;            <span class="hljs-comment">//遍历所有人</span><br>    <span class="hljs-keyword">for</span>(edge e12 : p1.edges)&#123;       <span class="hljs-comment">//遍历所有出边</span><br>        <span class="hljs-keyword">for</span>(edge e23 : p2.edges)&#123;<br>            <span class="hljs-keyword">if</span>(p1.contains(e13))&#123;<br>               tripleSum++;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="Dijkstra记录最短路径和次短路径维护循环路径">Dijkstra记录最短路径和次短路径维护循环路径</h4>
+<p>借鉴评论区大佬的算法，感觉很巧妙，只需要一次Dijkstra就可以得到答案。</p>
+<h2 id="三、性能问题">三、性能问题</h2>
+<h4 id="并查集性能">并查集性能</h4>
+<p>由于我使用HashSet存储一个联通块中的所有人的id，当merge联通块的时候需要操作很多次，远不如建树方便。最初删关系的时候由于直接将所有边（除删去的边）重新加入。在本地对拍的时候，我的运行时间常常是同学的10倍。<strong>解决方法</strong>：在加关系的时候标记边的类型</p>
+<ul>
+<li>两个点已经联通，删去此边没有影响，所以标记为无用边</li>
+<li>没有联通，将次边记为有用边</li>
+</ul>
+<p>所以只有有用边才需要重新加边操作，无用边可直接删去。优化完运行时间变为建树的两倍</p>
+<h4 id="循环路径">循环路径</h4>
+<p>第三次作业qlm强测CTLE，主要是mr性能一般，并且Dijkstra没有用优先队列优化。</p>
+<h4 id="规格与实现分离">规格与实现分离</h4>
+<p>在第一次作业实现过程中，我总是被JML的规格所束缚。但在后续过程中我逐渐认识到，JML只是一个约束条件，在满足规格的条件下，具体实现越简洁越好。比如在MyPerson中JML维护了Persons和Values两个数组分别存放熟人和熟人的亲密度，但其实一个HashMap就够了。所以总结下来，JML就像是规则，在不违背规则的情况下，任何实现方法都是正确的。除此之外，JML就像是项目的维护手册，具体实现千差万别，理解起来很难，但阅读JML能很清晰的理解这部分功能是什么，使用了什么数据结构，以及在后续优化维护中要遵守哪些规则。</p>
+<p>在具体实现的过程中，首先将JML翻译为自然语言，然后选择合适的数据结构和算法去实现。</p>
+<h2 id="四、OK测试">四、OK测试</h2>
+<p>对于OK测试，我认为是在复杂方法中验证正确性的办法，对于我们作业中的OKTest也只能保证调用方法前后保证约束条件。但是对于invariant和constraint等约束，就会变得相当复杂。而且就第二次、第三次作业的OKTest实现起来并不比测试的方法好实现多少。以至于还要对OKTest再进行测试。但不可否认，OKTest可以保证方法严格符合JML的规格。</p>
+<p>对于这方面的建议，我觉得可以真正让OKTest去测试我们实现的方法，每次调用该方法时都会自动进行OKTest，达到自检的效果。</p>
+<h2 id="五、体会">五、体会</h2>
+<p>本单元中最困难的部分不是根据JML规格去实现方法，而是对于数据结构和算法的选择，所谓1000个读者心中有1000个哈莫雷特。很多时候好不容易实现自己的算法，一跑起来发现好慢，又懒得不想重构，只能小修小改结果杯水车薪。其次对于JML，有些方面它能很精确精准的去约束，但有些时候却比自然语言繁琐很多很多，明明一句话就能讲清楚的事情，却要花上很大篇幅的JML去实现。可能在最新的JML中有更高级更简洁的表达吧。总体上来说通过这三次作业，对于如何根据规格进行实现有了很好的理解，掌握了一些算法。但是毕竟不是站在架构师的角度去想，所以在如何在宏观上去实现规格，进行设计还有很长的路要走。有的时候我们不能只闷头实现，也要抬头去想想如何设计吧。</p>
 
                 
               </div>
@@ -386,7 +552,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/OS/" class="category-chain-item">OS</a>
+  <a href="/categories/OO/" class="category-chain-item">OO</a>
   
   
 
@@ -401,9 +567,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/OS/">#OS</a>
+        <a href="/tags/OO/">#OO</a>
       
-        <a href="/tags/lab4/">#lab4</a>
+        <a href="/tags/%E6%80%BB%E7%BB%93/">#总结</a>
+      
+        <a href="/tags/JML/">#JML</a>
       
     </div>
   
@@ -415,8 +583,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>OS-lab4</div>
-      <div>https://etherialize.github.io/2023/05/13/OS-lab4/</div>
+      <div>OO第三单元总结</div>
+      <div>https://etherialize.github.io/2023/05/21/OO第三单元总结/</div>
     </div>
     <div class="license-meta">
       
@@ -428,7 +596,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年5月13日</div>
+          <div>2023年5月21日</div>
         </div>
       
       
@@ -460,18 +628,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/21/OO%E7%AC%AC%E4%B8%89%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93/" title="OO第三单元总结">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">OO第三单元总结</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/17/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93/" title="OO第二单元总结">
-                        <span class="hidden-mobile">OO第二单元总结</span>
+                      <a href="/2023/05/13/OS-lab4/" title="OS-lab4">
+                        <span class="hidden-mobile">OS-lab4</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -529,6 +691,19 @@
 
   
 
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
 
 
 
