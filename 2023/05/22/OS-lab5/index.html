@@ -1,0 +1,750 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/imgs/tou.jpg">
+  <link rel="icon" href="/imgs/tou.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="HZY">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="OS-lab5 写在前面，往年的上机实验都是60分就给满，去年因为疫情转为线上，实验总分还送了10分。就是说大佬甚至不用申优就能拿99分。今年exam和extra都是按百分比算分，1分的extra得了80相当于0.8。所以不能完全实现，实现一部分骗个样例分也不错。OS上机终于结束，在之后打算再好好理解一下MOS，内存管理，进程管理，文件系统，Shell和管道都有不太清楚的地，感觉OS一路下来每次都">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS-lab5">
+<meta property="og:url" content="https://etherialize.github.io/2023/05/22/OS-lab5/index.html">
+<meta property="og:site_name" content="Shall We ?">
+<meta property="og:description" content="OS-lab5 写在前面，往年的上机实验都是60分就给满，去年因为疫情转为线上，实验总分还送了10分。就是说大佬甚至不用申优就能拿99分。今年exam和extra都是按百分比算分，1分的extra得了80相当于0.8。所以不能完全实现，实现一部分骗个样例分也不错。OS上机终于结束，在之后打算再好好理解一下MOS，内存管理，进程管理，文件系统，Shell和管道都有不太清楚的地，感觉OS一路下来每次都">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://etherialize.github.io/2023/05/22/OS-lab5/%E6%97%B6%E5%BA%8F%E5%9B%BE.png">
+<meta property="article:published_time" content="2023-05-22T14:00:17.000Z">
+<meta property="article:modified_time" content="2023-05-22T15:09:37.945Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="OS">
+<meta property="article:tag" content="实验报告">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://etherialize.github.io/2023/05/22/OS-lab5/%E6%97%B6%E5%BA%8F%E5%9B%BE.png">
+  
+  
+  
+  <title>OS-lab5 - Shall We ?</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"etherialize.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Shall We ?</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="OS-lab5"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        HZY
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-22 22:00" pubdate>
+          2023年5月22日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          108 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">OS-lab5</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1>OS-lab5</h1>
+<p>写在前面，往年的上机实验都是60分就给满，去年因为疫情转为线上，实验总分还送了10分。就是说大佬甚至不用申优就能拿99分。今年exam和extra都是按百分比算分，1分的extra得了80相当于0.8。所以不能完全实现，实现一部分骗个样例分也不错。OS上机终于结束，在之后打算再好好理解一下MOS，内存管理，进程管理，文件系统，Shell和管道都有不太清楚的地，感觉OS一路下来每次都跟CO P7一样抽象。</p>
+<h2 id="上机">上机</h2>
+<h3 id="lab5-1">lab5-1</h3>
+<h4 id="exam">exam</h4>
+<p>lab5-1这部分涉及到读取外设，不用管文件系统。在完成此部分之前建议学习如何从控制台轮询读取输入，如何关闭控制台。</p>
+<p>这次exam还是比较简单，就是读取时钟外设，实现两个函数</p>
+<ul>
+<li>u_int get_time(u_int *us), 返回秒数，微秒通过指针返回</li>
+<li>void usleep(u_int us)，调用此函数实现：读取当前时间，然后休眠至少us微秒。</li>
+</ul>
+<p>需要注意返回的都是无符号数，计算休眠时间时先转换成有符号数（因为涉及到减法）：</p>
+<p>​    int s = (ys2 - ys1) * 1000000;<br>
+​    int uus = yus2 - yus1<br>
+​    s + uus 即为休眠时间</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs c">u_int <span class="hljs-title function_">get_time</span><span class="hljs-params">(u_int *us)</span><br>&#123;<br>  <span class="hljs-type">int</span> temp = <span class="hljs-number">0</span>;<br>  u_int rtc = <span class="hljs-number">0x15000000</span>;<br>  u_int time;<br>  syscall_write_dev(&amp;temp, rtc, <span class="hljs-number">4</span>);<br>  syscall_read_dev(&amp;time, rtc + <span class="hljs-number">0x0010</span>, <span class="hljs-number">4</span>);         <span class="hljs-comment">//读取秒</span><br>  syscall_read_dev(us, rtc + <span class="hljs-number">0x0020</span>, <span class="hljs-number">4</span>);            <span class="hljs-comment">//读取微秒</span><br>  <span class="hljs-keyword">return</span> time;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">usleep</span><span class="hljs-params">(u_int us)</span><br>&#123;<br>  <span class="hljs-type">int</span> temp = <span class="hljs-number">0</span>;<br>  u_int us1;<br>  u_int us2;<br>  u_int s1;<br>  s1 = get_time(&amp;us1);<br>  <span class="hljs-type">int</span> ys1 = (<span class="hljs-type">int</span>)(s1);<br>  <span class="hljs-type">int</span> yus1 = (<span class="hljs-type">int</span>)(us1);<br>  <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>  &#123;<br>    u_int s2 = get_time(&amp;us2);<br>    <span class="hljs-type">int</span> ys2 = (<span class="hljs-type">int</span>)(s2);<br>    <span class="hljs-type">int</span> yus2 = (<span class="hljs-type">int</span>)(us2);<br>    <span class="hljs-type">int</span> yus = (<span class="hljs-type">int</span>)(us);<br>    <span class="hljs-type">int</span> s = (ys2 - ys1) * <span class="hljs-number">1000000</span>;<br>    <span class="hljs-type">int</span> uus = yus2 - yus1 - yus;<br>    <span class="hljs-keyword">if</span> ((s + uus) &gt;= <span class="hljs-number">0</span>)<br>    &#123;<br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br><br>      syscall_yield();<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="extra">extra</h4>
+<p>实现一个固态硬盘，普通磁盘如果要覆盖写直接写就可以，但固态硬盘需要先擦除再写，频繁擦除会降低硬盘寿命，这也是为什么固态硬盘寿命较短的原因。为保证各个硬盘块擦除均匀，我们要实现分配系统。（具体题面忘了）,extra只得了80分，没找见bug。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> yinshe[<span class="hljs-number">32</span>];<br><span class="hljs-type">int</span> phmap[<span class="hljs-number">32</span>];<br><span class="hljs-type">int</span> phca[<span class="hljs-number">32</span>];<br><span class="hljs-type">char</span> s[<span class="hljs-number">520</span>];<br><span class="hljs-type">int</span> <span class="hljs-title function_">getlogno</span><span class="hljs-params">(<span class="hljs-type">int</span> phno)</span><br>&#123;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">32</span>; i++)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (yinshe[i] == phno)<br>		&#123;<br><br>			<span class="hljs-keyword">return</span> i;<br>		&#125;<br>	&#125;<br>&#125;<br><span class="hljs-type">int</span> <span class="hljs-title function_">fen</span><span class="hljs-params">()</span><br>&#123;<br>	<span class="hljs-type">int</span> min = <span class="hljs-number">114514</span>;<br>	<span class="hljs-type">int</span> flag = <span class="hljs-number">-1</span>;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">32</span>; i++)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (phmap[i] == <span class="hljs-number">0</span> &amp;&amp; phca[i] &lt; min)<br>		&#123;<br>			min = phca[i];<br>			flag = i;<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">if</span> (min &lt; <span class="hljs-number">5</span>)<br>	&#123;<br>		<span class="hljs-keyword">return</span> flag;<br>	&#125;<br><br>	<span class="hljs-type">int</span> a = flag;<br>	flag = <span class="hljs-number">-1</span>;<br>	min = <span class="hljs-number">114514</span>;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">32</span>; i++)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (phmap[i] == <span class="hljs-number">1</span> &amp;&amp; phca[i] &lt; min)<br>		&#123;<br>			min = phca[i];<br>			flag = i;<br>		&#125;<br>	&#125;<br>	<span class="hljs-type">int</span> b = flag;<br>	<span class="hljs-type">void</span> *temp;<br>	ide_read(<span class="hljs-number">0</span>, b, temp, <span class="hljs-number">1</span>);<br>	ide_write(<span class="hljs-number">0</span>, a, temp, <span class="hljs-number">1</span>);<br>	phmap[a] = <span class="hljs-number">1</span>;<br>	yinshe[getlogno(b)] = a;<br>	ide_write(<span class="hljs-number">0</span>, b, s, <span class="hljs-number">1</span>);<br>	phca[b]++;<br>	phmap[b] = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">return</span> b;<br>&#125;<br><span class="hljs-type">void</span> <span class="hljs-title function_">ssd_init</span><span class="hljs-params">()</span><br>&#123;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">32</span>; i++)<br>	&#123;<br>		yinshe[i] = <span class="hljs-number">-1</span>;<br>		phmap[i] = <span class="hljs-number">0</span>;<br>		phca[i] = <span class="hljs-number">0</span>;<br>	&#125;<br>&#125;<br><span class="hljs-type">int</span> <span class="hljs-title function_">ssd_read</span><span class="hljs-params">(u_int logic_no, <span class="hljs-type">void</span> *dst)</span><br>&#123;<br>	<span class="hljs-keyword">if</span> (yinshe[logic_no] == <span class="hljs-number">-1</span>)<br>	&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>	&#125;<br>	<span class="hljs-keyword">else</span><br>	&#123;<br>		ide_read(<span class="hljs-number">0</span>, yinshe[logic_no], dst, <span class="hljs-number">1</span>);<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>	&#125;<br>&#125;<br><span class="hljs-type">void</span> <span class="hljs-title function_">ssd_write</span><span class="hljs-params">(u_int logic_no, <span class="hljs-type">void</span> *src)</span><br>&#123;<br>	<span class="hljs-type">int</span> phno;<br>	<span class="hljs-keyword">if</span> (yinshe[logic_no] == <span class="hljs-number">-1</span>)<br>	&#123;<br>		phno = fen();<br>		yinshe[logic_no] = phno;<br>		phmap[phno] = <span class="hljs-number">1</span>;<br>		ide_write(<span class="hljs-number">0</span>, phno, src, <span class="hljs-number">1</span>);<br>	&#125;<br>	<span class="hljs-keyword">else</span><br>	&#123;<br><br>		phno = yinshe[logic_no];<br>		ide_write(<span class="hljs-number">0</span>, phno, s, <span class="hljs-number">1</span>);<br>		phca[phno]++;<br>		yinshe[logic_no] = <span class="hljs-number">-1</span>;<br>		phmap[phno] = <span class="hljs-number">0</span>;<br>		phno = fen();<br>		yinshe[logic_no] = phno;<br>		phmap[phno] = <span class="hljs-number">1</span>;<br>		ide_write(<span class="hljs-number">0</span>, phno, src, <span class="hljs-number">1</span>);<br>	&#125;<br>&#125;<br><span class="hljs-type">void</span> <span class="hljs-title function_">ssd_erase</span><span class="hljs-params">(u_int logic_no)</span><br>&#123;<br>	<span class="hljs-keyword">if</span> (yinshe[logic_no] == <span class="hljs-number">-1</span>)<br>	&#123;<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br>	<span class="hljs-type">int</span> phno = yinshe[logic_no];<br>	ide_write(<span class="hljs-number">0</span>, phno, s, <span class="hljs-number">1</span>);<br>	phca[phno]++;<br>	phmap[phno] = <span class="hljs-number">0</span>;<br>	yinshe[logic_no] = <span class="hljs-number">-1</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<h3 id="lab5-2">lab5-2</h3>
+<p>主要考文件系统，说实话课下需要自己完成的只是冰山一角，一定要在完成后好好理解一下。fs是文件服务进程处理文件操作请求的函数都放在这个目录下，user/lib里的file.c和fd.c是其他进程的用户接口。这次extra甚至考了tools里的format.c（课下一眼没看，课上看源码看了将近一个小时）</p>
+<h4 id="exam-2">exam</h4>
+<p>file.c中实现的open函数实现打开绝对路径，我们修改实现openat打开某个目录下的相对路径，具体如下，全部对标open，两者几乎一样</p>
+<p>就是在walk_path传入当前目录，从这开始找而不是从根目录。</p>
+<ul>
+<li>file.c 中实现<code>int openat(int dirfd, const char *path, int mode)</code>实现在当前目录（文件操作符为dirfd）下寻找路径为path的文件</li>
+<li>fsipc.c中实现<code>int fsipc_openat(u_int dir_fileid, const char *path, u_int omode, struct Fd *fd)</code>构建你的<code>struct Fsreq_openat *req</code></li>
+<li>fs/serv.c实现<code>void serve_openat(u_int envid, struct Fsreq_openat *rq)</code>并修改serve函数</li>
+<li>fs/fs.c中实现<code>int file_openat(struct File *dir, char *path, struct File **pfile)</code>和<code>int walk_path_at(struct File *par_dir, char *path, struct File **pdir, struct File **pfile, char *lastelem)</code></li>
+</ul>
+<p>看似很麻烦，但其实大部分就是复制粘贴</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// file.c</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">openat</span><span class="hljs-params">(<span class="hljs-type">int</span> dirfd, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *path, <span class="hljs-type">int</span> mode)</span><br>&#123;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Fd</span> *<span class="hljs-title">dir</span>;</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Fd</span> *<span class="hljs-title">fd</span>;</span><br>	<span class="hljs-type">int</span> r;<br>	<span class="hljs-keyword">if</span> ((r = fd_lookup(dirfd, &amp;dir)) &lt; <span class="hljs-number">0</span>)<br>	&#123;<br>		<span class="hljs-keyword">return</span> r;<br>	&#125;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Filefd</span> *<span class="hljs-title">dirfile</span> =</span> (<span class="hljs-keyword">struct</span> Filefd *)dir;<br>	<span class="hljs-type">int</span> fileid = dirfile-&gt;f_fileid;                  <span class="hljs-comment">//找到当前目录的fileid</span><br>	try(fd_alloc(&amp;fd));<br>	try(fsipc_openat(fileid, path, mode, fd));<br>	<span class="hljs-type">char</span> *va;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Filefd</span> *<span class="hljs-title">ffd</span>;</span><br>	u_int size, fileid1;<br>	va = fd2data(fd);<br>	ffd = (<span class="hljs-keyword">struct</span> Filefd *)fd;<br>	size = ffd-&gt;f_file.f_size;<br>	fileid1 = ffd-&gt;f_fileid;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i += BY2PG)<br>	&#123;<br>		try(fsipc_map(fileid1, i, va + i));<br>	&#125;<br>	<span class="hljs-keyword">return</span> fd2num(fd);<br>&#125;<br><br><span class="hljs-comment">//fsipc.c</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">fsipc_openat</span><span class="hljs-params">(u_int dir_fileid, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *path, u_int omode, <span class="hljs-keyword">struct</span> Fd *fd)</span><br>&#123;<br>	u_int perm;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Fsreq_openat</span> *<span class="hljs-title">req</span>;</span><br><br>	req = (<span class="hljs-keyword">struct</span> Fsreq_openat *)fsipcbuf;<br><br>	<span class="hljs-comment">// The path is too long.</span><br>	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">strlen</span>(path) &gt;= MAXPATHLEN)<br>	&#123;<br>		<span class="hljs-keyword">return</span> -E_BAD_PATH;<br>	&#125;<br>	req-&gt;dir_fileid = dir_fileid;<br>	<span class="hljs-built_in">strcpy</span>((<span class="hljs-type">char</span> *)req-&gt;req_path, path);<br>	req-&gt;req_omode = omode;<br>	<span class="hljs-keyword">return</span> fsipc(FSREQ_OPENAT, req, fd, &amp;perm);<br>&#125;<br><br><span class="hljs-comment">//serv.c</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">serve_openat</span><span class="hljs-params">(u_int envid, <span class="hljs-keyword">struct</span> Fsreq_openat *rq)</span><br>&#123;<br><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Open</span> *<span class="hljs-title">pOpen</span>;</span><br>	<span class="hljs-type">int</span> r;<br>	<span class="hljs-keyword">if</span> ((r = open_lookup(envid, rq-&gt;dir_fileid, &amp;pOpen)) &lt; <span class="hljs-number">0</span>)      <span class="hljs-comment">//找到当前目录</span><br>	&#123;<br>		ipc_send(envid, r, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">File</span> *<span class="hljs-title">dir</span> =</span> pOpen-&gt;o_file;<br><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">File</span> *<span class="hljs-title">f</span>;</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Filefd</span> *<span class="hljs-title">ff</span>;</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Open</span> *<span class="hljs-title">o</span>;</span><br><br>	<span class="hljs-comment">// Find a file id.</span><br>	<span class="hljs-keyword">if</span> ((r = open_alloc(&amp;o)) &lt; <span class="hljs-number">0</span>)<br>	&#123;<br>		ipc_send(envid, r, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>	&#125;<br><br>	<span class="hljs-comment">// Open the file.</span><br>	<span class="hljs-keyword">if</span> ((r = file_openat(dir, rq-&gt;req_path, &amp;f)) &lt; <span class="hljs-number">0</span>)<br>	&#123;<br>		ipc_send(envid, r, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br><br>	<span class="hljs-comment">// Save the file pointer.</span><br>	o-&gt;o_file = f;<br><br>	<span class="hljs-comment">// Fill out the Filefd structure</span><br>	ff = (<span class="hljs-keyword">struct</span> Filefd *)o-&gt;o_ff;<br>	ff-&gt;f_file = *f;<br>	ff-&gt;f_fileid = o-&gt;o_fileid;<br>	o-&gt;o_mode = rq-&gt;req_omode;<br>	ff-&gt;f_fd.fd_omode = o-&gt;o_mode;<br>	ff-&gt;f_fd.fd_dev_id = devfile.dev_id;<br><br>	ipc_send(envid, <span class="hljs-number">0</span>, o-&gt;o_ff, PTE_D | PTE_LIBRARY);<br>&#125;<br><br><span class="hljs-comment">// fs.c</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">walk_path_at</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> File *par_dir, <span class="hljs-type">char</span> *path, <span class="hljs-keyword">struct</span> File **pdir, <span class="hljs-keyword">struct</span> File **pfile, <span class="hljs-type">char</span> *lastelem)</span>&#123;<br>     <span class="hljs-type">char</span> *p;<br>	<span class="hljs-type">char</span> name[MAXNAMELEN];<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">File</span> *<span class="hljs-title">dir</span>, *<span class="hljs-title">file</span>;</span><br>	<span class="hljs-type">int</span> r;<br><br>	<span class="hljs-comment">// start at the root.</span><br>	path = skip_slash(path);<br>	file = par_dir;                                         <span class="hljs-comment">//最关键一步</span><br>	dir = <span class="hljs-number">0</span>;<br>	name[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;<br><br>	<span class="hljs-keyword">if</span> (pdir) &#123;<br>		*pdir = <span class="hljs-number">0</span>;<br>	&#125;<br><br>	*pfile = <span class="hljs-number">0</span>;<br><br>	<span class="hljs-comment">// find the target file by name recursively.</span><br>	<span class="hljs-keyword">while</span> (*path != <span class="hljs-string">&#x27;\0&#x27;</span>) &#123;<br>		dir = file;<br>		p = path;<br><br>		<span class="hljs-keyword">while</span> (*path != <span class="hljs-string">&#x27;/&#x27;</span> &amp;&amp; *path != <span class="hljs-string">&#x27;\0&#x27;</span>) &#123;<br>			path++;<br>		&#125;<br><br>		<span class="hljs-keyword">if</span> (path - p &gt;= MAXNAMELEN) &#123;<br>			<span class="hljs-keyword">return</span> -E_BAD_PATH;<br>		&#125;<br><br>		<span class="hljs-built_in">memcpy</span>(name, p, path - p);<br>		name[path - p] = <span class="hljs-string">&#x27;\0&#x27;</span>;<br>		path = skip_slash(path);<br>		<span class="hljs-keyword">if</span> (dir-&gt;f_type != FTYPE_DIR) &#123;<br>			<span class="hljs-keyword">return</span> -E_NOT_FOUND;<br>		&#125;<br><br>		<span class="hljs-keyword">if</span> ((r = dir_lookup(dir, name, &amp;file)) &lt; <span class="hljs-number">0</span>) &#123;<br>			<span class="hljs-keyword">if</span> (r == -E_NOT_FOUND &amp;&amp; *path == <span class="hljs-string">&#x27;\0&#x27;</span>) &#123;<br>				<span class="hljs-keyword">if</span> (pdir) &#123;<br>					*pdir = dir;<br>				&#125;<br><br>				<span class="hljs-keyword">if</span> (lastelem) &#123;<br>					<span class="hljs-built_in">strcpy</span>(lastelem, name);<br>				&#125;<br><br>				*pfile = <span class="hljs-number">0</span>;<br>			&#125;<br><br>			<span class="hljs-keyword">return</span> r;<br>		&#125;<br>	&#125;<br><br>	<span class="hljs-keyword">if</span> (pdir) &#123;<br>		*pdir = dir;<br>	&#125;<br><br>	*pfile = file;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="extra-2">extra</h4>
+<p>实现新的一种文件类型，即链接文件，可以看做是Windows的快捷方式，只不过这种文件内容存的是其指向文件的绝对路径，其指向文件可能还是一个链接文件，但保证最终指向一个普通文件</p>
+<ul>
+<li>修改format.c
+<ul>
+<li>增加<code>void write_symlink(struct File *dirf, const char *path)</code></li>
+<li>修改主函数，增加分支</li>
+<li>修改write_directory，增加分支</li>
+</ul>
+</li>
+<li>修改open，实现如果当前文件是链接文件，最终要返回最终指向的普通文件</li>
+</ul>
+<p>使用memcpy时一定要注意，目标缓冲区一定要初始化</p>
+<p>即<code>char nextpath[1024] = &quot;\0&quot;;</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">open</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *path, <span class="hljs-type">int</span> mode)</span> &#123;<br>	<span class="hljs-type">int</span> r;<br><br>	<span class="hljs-comment">// Step 1: Alloc a new &#x27;Fd&#x27; using &#x27;fd_alloc&#x27; in fd.c.</span><br>	<span class="hljs-comment">// Hint: return the error code if failed.</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Fd</span> *<span class="hljs-title">fd</span>;</span><br>	<span class="hljs-comment">/* Exercise 5.9: Your code here. (1/5) */</span><br>    try(fd_alloc(&amp;fd));<br>	<span class="hljs-comment">// Step 2: Prepare the &#x27;fd&#x27; using &#x27;fsipc_open&#x27; in fsipc.c.</span><br>	<span class="hljs-comment">/* Exercise 5.9: Your code here. (2/5) */</span><br>    try(fsipc_open(path, mode, fd));<br>	<span class="hljs-comment">// Step 3: Set &#x27;va&#x27; to the address of the page where the &#x27;fd&#x27;&#x27;s data is cached, using</span><br>	<span class="hljs-comment">// &#x27;fd2data&#x27;. Set &#x27;size&#x27; and &#x27;fileid&#x27; correctly with the value in &#x27;fd&#x27; as a &#x27;Filefd&#x27;.</span><br>	<span class="hljs-type">char</span> *va;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Filefd</span> *<span class="hljs-title">ffd</span>;</span><br>	u_int size, fileid;<br>	<span class="hljs-comment">/* Exercise 5.9: Your code here. (3/5) */</span><br>    va = fd2data(fd);<br>    ffd = (<span class="hljs-keyword">struct</span> Filefd *)fd;<br>	size = ffd-&gt;f_file.f_size;<br>	fileid = ffd-&gt;f_fileid;<br>	<span class="hljs-comment">// Step 4: Alloc pages and map the file content using &#x27;fsipc_map&#x27;.</span><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i += BY2PG) &#123;<br>		<span class="hljs-comment">/* Exercise 5.9: Your code here. (4/5) */</span><br>        try(fsipc_map(fileid,i,va + i));<br>	&#125;<br><br>	<span class="hljs-comment">// Step 5: Return the number of file descriptor using &#x27;fd2num&#x27;.</span><br>	<span class="hljs-comment">/* Exercise 5.9: Your code here. (5/5) */</span><br>	<span class="hljs-keyword">while</span>(ffd-&gt;f_file.f_type == <span class="hljs-number">2</span>)&#123;<br>           <span class="hljs-type">char</span> next[<span class="hljs-number">1024</span>] = <span class="hljs-string">&quot;\0&quot;</span>;<br>	   file_read(fd, next, ffd-&gt;f_file.f_size, <span class="hljs-number">0</span>);<br>	   <span class="hljs-keyword">return</span> open(next, mode);<br>		&#125;<br>    <span class="hljs-keyword">return</span> fd2num(fd);<br>&#125;<br><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">write_symlink</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> File *dirf, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *path)</span><br>&#123;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">File</span> *<span class="hljs-title">target</span> =</span> create_file(dirf);<br>	<span class="hljs-comment">// Your code here: 使用 readlink() 函数读取链接文件指向的路径，将其写入到下一个可用的磁盘块</span><br>	<span class="hljs-type">char</span> nextlink[<span class="hljs-number">1024</span>] = <span class="hljs-string">&quot;\0&quot;</span>;<br>	readlink(path, nextlink, <span class="hljs-number">1024</span>);<br>	<span class="hljs-built_in">memcpy</span>((<span class="hljs-type">void</span> *)disk[nextbno].data, nextlink, <span class="hljs-built_in">strlen</span>(nextlink));<br>	<span class="hljs-type">const</span> <span class="hljs-type">char</span> *fname = <span class="hljs-built_in">strrchr</span>(path, <span class="hljs-string">&#x27;/&#x27;</span>);<br>	<span class="hljs-keyword">if</span> (fname)<br>	&#123;<br>		fname++;<br>	&#125;<br>	<span class="hljs-keyword">else</span><br>	&#123;<br>		fname = path;<br>	&#125;<br>	<span class="hljs-comment">// Your code here: 设置链接文件的文件名、大小（指向路径的字符串的长度）、类型属性</span><br>	target-&gt;f_size = <span class="hljs-built_in">strlen</span>(nextlink);<br>	<span class="hljs-built_in">strcpy</span>(target-&gt;f_name, fname);<br>	target-&gt;f_type = FTYPE_LNK;<br>	save_block_link(target, <span class="hljs-number">0</span>, next_block(BLOCK_DATA));<br>&#125;<br><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span><br>&#123;<br>	<span class="hljs-keyword">static_assert</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> File) == BY2FILE);<br>	init_disk();<br><br>	<span class="hljs-keyword">if</span> (argc &lt; <span class="hljs-number">3</span>)<br>	&#123;<br>		<span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Usage: fsformat &lt;img-file&gt; [files or directories]...\n&quot;</span>);<br>		<span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>	&#125;<br><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>; i &lt; argc; i++)<br>	&#123;<br>		<span class="hljs-type">char</span> *name = argv[i];<br>		<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">stat</span> <span class="hljs-title">stat_buf</span>;</span><br>		<span class="hljs-type">int</span> r = lstat(name, &amp;stat_buf);<br>		assert(r == <span class="hljs-number">0</span>);<br>		<span class="hljs-keyword">if</span> (S_ISDIR(stat_buf.st_mode))<br>		&#123;<br>			<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;writing directory &#x27;%s&#x27; recursively into disk\n&quot;</span>, name);<br>			write_directory(&amp;super.s_root, name);<br>		&#125;<br>		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (S_ISREG(stat_buf.st_mode))<br>		&#123;<br>			<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;writing regular file &#x27;%s&#x27; into disk\n&quot;</span>, name);<br>			write_file(&amp;super.s_root, name);<br>		&#125;<br>		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (S_ISLNK(stat_buf.st_mode))                     <span class="hljs-comment">//增加的分支</span><br>		&#123;<br>			write_symlink(&amp;super.s_root, name);<br>		&#125;<br>		<span class="hljs-keyword">else</span><br>		&#123;<br>			<span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;&#x27;%s&#x27; has illegal file mode %o\n&quot;</span>, name, stat_buf.st_mode);<br>			<span class="hljs-built_in">exit</span>(<span class="hljs-number">2</span>);<br>		&#125;<br>	&#125;<br><br>	flush_bitmap();<br>	finish_fs(argv[<span class="hljs-number">1</span>]);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">write_directory</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> File *dirf, <span class="hljs-type">char</span> *path)</span><br>&#123;<br>	DIR *dir = opendir(path);<br>	<span class="hljs-keyword">if</span> (dir == <span class="hljs-literal">NULL</span>)<br>	&#123;<br>		perror(<span class="hljs-string">&quot;opendir&quot;</span>);<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">File</span> *<span class="hljs-title">pdir</span> =</span> create_file(dirf);<br>	<span class="hljs-built_in">strncpy</span>(pdir-&gt;f_name, basename(path), MAXNAMELEN - <span class="hljs-number">1</span>);<br>	<span class="hljs-keyword">if</span> (pdir-&gt;f_name[MAXNAMELEN - <span class="hljs-number">1</span>] != <span class="hljs-number">0</span>)<br>	&#123;<br>		<span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;file name is too long: %s\n&quot;</span>, path);<br>		<span class="hljs-comment">// File already created, no way back from here.</span><br>		<span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>	&#125;<br>	pdir-&gt;f_type = FTYPE_DIR;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">struct</span> dirent *e; (e = readdir(dir)) != <span class="hljs-literal">NULL</span>;)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(e-&gt;d_name, <span class="hljs-string">&quot;.&quot;</span>) != <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-built_in">strcmp</span>(e-&gt;d_name, <span class="hljs-string">&quot;..&quot;</span>) != <span class="hljs-number">0</span>)<br>		&#123;<br>			<span class="hljs-type">char</span> *buf = <span class="hljs-built_in">malloc</span>(<span class="hljs-built_in">strlen</span>(path) + <span class="hljs-built_in">strlen</span>(e-&gt;d_name) + <span class="hljs-number">2</span>);<br>			<span class="hljs-built_in">sprintf</span>(buf, <span class="hljs-string">&quot;%s/%s&quot;</span>, path, e-&gt;d_name);<br>			<span class="hljs-keyword">if</span> (e-&gt;d_type == DT_DIR)<br>			&#123;<br>				write_directory(pdir, buf);<br>			&#125; <br>			<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (e-&gt;d_type == DT_LNK)                      <span class="hljs-comment">//增加的分支</span><br>			&#123;<br>				write_symlink(pdir, buf);<br>			&#125;<br>			<span class="hljs-keyword">else</span><br>			&#123;<br>				write_file(pdir, buf);<br>			&#125;<br>			<span class="hljs-built_in">free</span>(buf);<br>		&#125;<br>	&#125;<br>	closedir(dir);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<h2 id="实验报告">实验报告</h2>
+<h3 id="一、Thinking">一、Thinking</h3>
+<h4 id="Thinking-5-1-如果通过-kseg0-读写设备，那么对于设备的写入会缓存到-Cache-中。这是-一种错误的行为，在实际编写代码的时候这么做会引发不可预知的问题。请思考：这么做-这会引发什么问题？对于不同种类的设备（如我们提到的串口设备和-IDE-磁盘）的操作会-有差异吗？可以从缓存的性质和缓存更新的策略来考虑。">Thinking 5.1 如果通过 kseg0 读写设备，那么对于设备的写入会缓存到 Cache 中。这是 一种错误的行为，在实际编写代码的时候这么做会引发不可预知的问题。请思考：这么做 这会引发什么问题？对于不同种类的设备（如我们提到的串口设备和 IDE 磁盘）的操作会 有差异吗？可以从缓存的性质和缓存更新的策略来考虑。</h4>
+<p>举个例子，比如往控制台写入0123，此时0123会缓存到控制台，此时从控制台读入字符串，就会读到0123。不同类型设备的错误可能不一样。这是因为cache中存储的内容只有被替换时，才会写回到设备。</p>
+<h4 id="Thinking-5-2-查找代码中的相关定义，试回答一个磁盘块中最多能存储多少个文件控制-块？一个目录下最多能有多少个文件？我们的文件系统支持的单个文件最大为多大？">Thinking 5.2 查找代码中的相关定义，试回答一个磁盘块中最多能存储多少个文件控制 块？一个目录下最多能有多少个文件？我们的文件系统支持的单个文件最大为多大？</h4>
+<p>每个磁盘块大小为4KB，而每个文件控制块被char f_pad对齐为256B，所以可以存储16个文件控制块</p>
+<p>可看做一个磁盘块都用来存储文件磁盘块号，最多有1024个磁盘块，大小为1024 * 4KB = 4MB</p>
+<p>一个目录最多有1024个磁盘块，+最多有1024 * 16 = 16384个文件</p>
+<h4 id="Thinking-5-3-请思考，在满足磁盘块缓存的设计的前提下，我们实验使用的内核支持的最-大磁盘大小是多少？">Thinking 5.3 请思考，在满足磁盘块缓存的设计的前提下，我们实验使用的内核支持的最 大磁盘大小是多少？</h4>
+<p>DISKMAX为0x40000000，所以满足最大的磁盘大小为1GB</p>
+<h4 id="Thinking-5-4-在本实验中，fs-serv-h、user-include-fs-h-等文件中出现了许多宏定义，-试列举你认为较为重要的宏定义，同时进行解释，并描述其主要应用之处。">Thinking 5.4 在本实验中，fs/serv.h、user/include/fs.h 等文件中出现了许多宏定义， 试列举你认为较为重要的宏定义，同时进行解释，并描述其主要应用之处。</h4>
+<p><strong>serv.h</strong></p>
+<p>PTE_DIRTY，内存可以看做CPU和disk之间的cache，所以PTE_DIRTY代表物理页所对应的磁盘块内容是否被更改了</p>
+<p><strong>fs.h</strong></p>
+<p>NDIRECT 10 ，直接索引的数量</p>
+<p>NINDIRECT (BY2BLK / 4) 间接索引的数量</p>
+<p>MAXFILESIZE (NINDIRECT * BY2BLK) 文件最大大小</p>
+<p>BY2FILE 256  文件控制块大小</p>
+<h4 id="Thinking-5-5-在-Lab4“系统调用与-fork”的实验中我们实现了极为重要的-fork-函数。那-么-fork-前后的父子进程是否会共享文件描述符和定位指针呢？请在完成上述练习的基础上-编写一个程序进行验证。">Thinking 5.5 在 Lab4“系统调用与 fork”的实验中我们实现了极为重要的 fork 函数。那 么 fork 前后的父子进程是否会共享文件描述符和定位指针呢？请在完成上述练习的基础上 编写一个程序进行验证。</h4>
+<p>会共享，fork时，会把文件操作符复制过去。但是并不共享，相当于父子进程分别打开同一个文件，可以独立修改文件内容。</p>
+<h4 id="Thinking-5-6-请解释-File-Fd-Filefd-结构体及其各个域的作用。比如各个结构体会在哪-些过程中被使用，是否对应磁盘上的物理实体还是单纯的内存数据等。说明形式自定，要-求简洁明了，可大致勾勒出文件系统数据结构与物理实体的对应关系与设计框架。">Thinking 5.6 请解释 File, Fd, Filefd 结构体及其各个域的作用。比如各个结构体会在哪 些过程中被使用，是否对应磁盘上的物理实体还是单纯的内存数据等。说明形式自定，要 求简洁明了，可大致勾勒出文件系统数据结构与物理实体的对应关系与设计框架。</h4>
+<ul>
+<li>Fd当从文件服务进程传回时，其可被强制转换类型，得到文件控制块</li>
+<li>f_fileid对应着文件服务进程中一个open结构体，得到对应关系</li>
+<li>File对应的是磁盘上的物理实体</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Fd</span> &#123;</span> u_int fd_dev_id;  <span class="hljs-comment">//设备id</span><br>​           u_int fd_offset;  <span class="hljs-comment">//fd所指向地址</span><br>            u_int fd_omode;   <span class="hljs-comment">//文件操作类型</span><br>            &#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Filefd</span> &#123;</span><br>               <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Fd</span> <span class="hljs-title">f_fd</span>;</span>      <span class="hljs-comment">//文件操作符</span><br>               u_int f_fileid;      <span class="hljs-comment">//文件id</span><br>               <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">File</span> <span class="hljs-title">f_file</span>;</span>  <span class="hljs-comment">//文件控制块</span><br> &#125;;<br> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">File</span> &#123;</span><br>	<span class="hljs-type">char</span> f_name[MAXNAMELEN]; <span class="hljs-comment">// filename</span><br>	<span class="hljs-type">uint32_t</span> f_size;	 <span class="hljs-comment">// file size in bytes</span><br>	<span class="hljs-type">uint32_t</span> f_type;	 <span class="hljs-comment">// file type</span><br>	<span class="hljs-type">uint32_t</span> f_direct[NDIRECT];<br>	<span class="hljs-type">uint32_t</span> f_indirect;<br><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">File</span> *<span class="hljs-title">f_dir</span>;</span> <span class="hljs-comment">// the pointer to the dir where this file is in, valid only in memory.</span><br>	<span class="hljs-type">char</span> f_pad[BY2FILE - MAXNAMELEN - (<span class="hljs-number">3</span> + NDIRECT) * <span class="hljs-number">4</span> - <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">void</span> *)];<br>&#125;<br><br><br><br></code></pre></td></tr></table></figure>
+<h4 id="Thinking-5-7-图5-7中有多种不同形式的箭头，请解释这些不同箭头的差别，并思考我们-的操作系统是如何实现对应类型的进程间通信的。">Thinking 5.7 图5.7中有多种不同形式的箭头，请解释这些不同箭头的差别，并思考我们 的操作系统是如何实现对应类型的进程间通信的。</h4>
+<img src="/2023/05/22/OS-lab5/%E6%97%B6%E5%BA%8F%E5%9B%BE.png" srcset="/img/loading.gif" lazyload class>
+<p>实线箭头为同步消息</p>
+<p>虚线箭头为同步返回消息</p>
+<p>首先操作系统创建用户进程和文件服务进程，文件服务进程完成初始化可以工作，开始轮询不断接受用户进程的文件请求。用户进程不同操作，通过发送信息到文件服务进程，请求服务，等待文件服务进程完成相应操作并返回结果。</p>
+<h3 id="二、实验难点">二、实验难点</h3>
+<h4 id="虚拟地址">虚拟地址</h4>
+<p>外设对应的地址属于kesg1的地址，当用户进程需要读写外设时，需要通过系统调用来完成。内核态访问用户空间的地址会通过当前进程的标识符访问TLB进而得到物理地址。而在之前的lab3-extra中，之所以需要通过用户虚拟地址转换为内核态虚拟地址是因为指令所在的页面权限没有可写权限。并且用户地址范围可能是跨页的，并且可能是缺页的，所以不能通过内核态地址访问。</p>
+<h4 id="文件操作">文件操作</h4>
+<p>我们可以把内存看做磁盘和CPU之间的cache，是通过将要访问的文件映射到内存中，修改内存，最终修改结果又会返回到磁盘中。处理文件操作是由文件服务进程和用户进程之间的通信完成的，用户进程将需要进行的操作的信息发送到文件服务进程，并将文件映射到用户进程的地址中。如果修改文件内容，对应内存页面会有PTE_DIRTY标志，会把修改写入磁盘。</p>
+<h4 id="Fd，-FileFd等对应的结构体">Fd， FileFd等对应的结构体</h4>
+<p>在思考题已给出解释</p>
+<h3 id="三、实验体会">三、实验体会</h3>
+<p>lab5在代码提示下补全还是很容易的。但文件操作具体的实现却很复杂，从5.9到5.13用户接口的实现，我们仅仅完成很小的一部分。具体过程需要自己看源码理解。在最初拉取分支的时候看到fs目录甚是困惑，管理文件为什么放到了用户态中，其实这符合微内核的思想。但同时也有疑问，是否应该给用户进程这么大的权限。从打开一个文件到更改并保存关闭，这之间各个函数的调用和进程之间的通信非常复杂，需要理解清楚。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/OS/" class="category-chain-item">OS</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/OS/">#OS</a>
+      
+        <a href="/tags/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/">#实验报告</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>OS-lab5</div>
+      <div>https://etherialize.github.io/2023/05/22/OS-lab5/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>HZY</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/21/OO%E7%AC%AC%E4%B8%89%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93/" title="OO第三单元总结">
+                        <span class="hidden-mobile">OO第三单元总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
